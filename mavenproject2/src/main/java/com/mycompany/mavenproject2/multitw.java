@@ -16,7 +16,9 @@
  * limitations under the License.
  */
 package com.mycompany.mavenproject2;
-
+import com.graphhopper.jsprit.analysis.toolbox.GraphStreamViewer;
+import com.graphhopper.jsprit.analysis.toolbox.GraphStreamViewer.Label;
+import com.graphhopper.jsprit.analysis.toolbox.Plotter;
 import com.graphhopper.jsprit.core.algorithm.VehicleRoutingAlgorithm;
 import com.graphhopper.jsprit.core.algorithm.box.Jsprit;
 import com.graphhopper.jsprit.core.problem.Location;
@@ -119,9 +121,9 @@ public class multitw {
 		/*
          * plot
 		 */
-//        new Plotter(problem,bestSolution).setLabel(Plotter.Label.ID).plot("output/plot", "mtw");
+       new Plotter(problem,bestSolution).setLabel(Plotter.Label.ID).plot("output/plot.png", "mtw");
 
-//        new GraphStreamViewer(problem, bestSolution).labelWith(Label.ID).setRenderDelay(200).display();
+        new GraphStreamViewer(problem, bestSolution).labelWith(Label.ID).setRenderDelay(200).display();
     }
 
 }

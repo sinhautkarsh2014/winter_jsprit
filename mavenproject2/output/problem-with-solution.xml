@@ -6,7 +6,7 @@
      </problemType>
      <vehicles>
           <vehicle>
-               <id>vehicles@[10,10]</id>
+               <id>vehicle</id>
                <typeId>vehicleType</typeId>
                <startLocation>
                     <id>[x=10.0][y=10.0]</id>
@@ -15,23 +15,6 @@
                <endLocation>
                     <id>[x=10.0][y=10.0]</id>
                     <coord x="10.0" y="10.0"/>
-               </endLocation>
-               <timeSchedule>
-                    <start>0.0</start>
-                    <end>1.7976931348623157E308</end>
-               </timeSchedule>
-               <returnToDepot>true</returnToDepot>
-          </vehicle>
-          <vehicle>
-               <id>vehicles@[50,50]</id>
-               <typeId>vehicleType</typeId>
-               <startLocation>
-                    <id>[x=50.0][y=50.0]</id>
-                    <coord x="50.0" y="50.0"/>
-               </startLocation>
-               <endLocation>
-                    <id>[x=50.0][y=50.0]</id>
-                    <coord x="50.0" y="50.0"/>
                </endLocation>
                <timeSchedule>
                     <start>0.0</start>
@@ -44,7 +27,7 @@
           <type>
                <id>vehicleType</id>
                <capacity-dimensions>
-                    <dimension index="0">8</dimension>
+                    <dimension index="0">2</dimension>
                </capacity-dimensions>
                <costs>
                     <fixed>0.0</fixed>
@@ -122,8 +105,8 @@
           </service>
           <service id="5" type="service">
                <location>
-                    <id>[x=55.0][y=57.0]</id>
-                    <coord x="55.0" y="57.0"/>
+                    <id>[x=6.0][y=8.0]</id>
+                    <coord x="6.0" y="8.0"/>
                </location>
                <capacity-dimensions>
                     <dimension index="0">1</dimension>
@@ -138,8 +121,8 @@
           </service>
           <service id="6" type="service">
                <location>
-                    <id>[x=55.0][y=63.0]</id>
-                    <coord x="55.0" y="63.0"/>
+                    <id>[x=6.0][y=14.0]</id>
+                    <coord x="6.0" y="14.0"/>
                </location>
                <capacity-dimensions>
                     <dimension index="0">1</dimension>
@@ -154,8 +137,8 @@
           </service>
           <service id="7" type="service">
                <location>
-                    <id>[x=65.0][y=57.0]</id>
-                    <coord x="65.0" y="57.0"/>
+                    <id>[x=14.0][y=6.0]</id>
+                    <coord x="14.0" y="6.0"/>
                </location>
                <capacity-dimensions>
                     <dimension index="0">1</dimension>
@@ -170,8 +153,8 @@
           </service>
           <service id="8" type="service">
                <location>
-                    <id>[x=65.0][y=63.0]</id>
-                    <coord x="65.0" y="63.0"/>
+                    <id>[x=14.0][y=13.0]</id>
+                    <coord x="14.0" y="13.0"/>
                </location>
                <capacity-dimensions>
                     <dimension index="0">1</dimension>
@@ -187,68 +170,112 @@
      </services>
      <solutions>
           <solution>
-               <cost>80.81717441398007</cost>
+               <cost>49.352292720484826</cost>
                <routes>
                     <route>
                          <driverId>noDriver</driverId>
-                         <vehicleId>vehicles@[10,10]</vehicleId>
+                         <vehicleId>vehicle</vehicleId>
                          <start>0.0</start>
                          <act type="service">
-                              <serviceId>2</serviceId>
-                              <arrTime>5.830951894845301</arrTime>
-                              <endTime>5.830951894845301</endTime>
+                              <serviceId>5</serviceId>
+                              <arrTime>4.47213595499958</arrTime>
+                              <endTime>4.47213595499958</endTime>
                          </act>
                          <act type="service">
                               <serviceId>1</serviceId>
-                              <arrTime>11.8309518948453</arrTime>
-                              <endTime>11.8309518948453</endTime>
+                              <arrTime>5.8863495173726745</arrTime>
+                              <endTime>5.8863495173726745</endTime>
                          </act>
-                         <act type="service">
-                              <serviceId>3</serviceId>
-                              <arrTime>21.8309518948453</arrTime>
-                              <endTime>21.8309518948453</endTime>
-                         </act>
-                         <act type="service">
-                              <serviceId>4</serviceId>
-                              <arrTime>27.8309518948453</arrTime>
-                              <endTime>27.8309518948453</endTime>
-                         </act>
-                         <end>33.6619037896906</end>
+                         <end>11.717301412217974</end>
                     </route>
                     <route>
                          <driverId>noDriver</driverId>
-                         <vehicleId>vehicles@[50,50]</vehicleId>
+                         <vehicleId>vehicle</vehicleId>
+                         <start>0.0</start>
+                         <act type="service">
+                              <serviceId>6</serviceId>
+                              <arrTime>5.656854249492381</arrTime>
+                              <endTime>5.656854249492381</endTime>
+                         </act>
+                         <act type="service">
+                              <serviceId>2</serviceId>
+                              <arrTime>7.0710678118654755</arrTime>
+                              <endTime>7.0710678118654755</endTime>
+                         </act>
+                         <end>12.902019706710776</end>
+                    </route>
+                    <route>
+                         <driverId>noDriver</driverId>
+                         <vehicleId>vehicle</vehicleId>
                          <start>0.0</start>
                          <act type="service">
                               <serviceId>7</serviceId>
-                              <arrTime>16.55294535724685</arrTime>
-                              <endTime>16.55294535724685</endTime>
+                              <arrTime>5.656854249492381</arrTime>
+                              <endTime>5.656854249492381</endTime>
                          </act>
+                         <act type="service">
+                              <serviceId>3</serviceId>
+                              <arrTime>7.0710678118654755</arrTime>
+                              <endTime>7.0710678118654755</endTime>
+                         </act>
+                         <end>12.902019706710776</end>
+                    </route>
+                    <route>
+                         <driverId>noDriver</driverId>
+                         <vehicleId>vehicle</vehicleId>
+                         <start>0.0</start>
                          <act type="service">
                               <serviceId>8</serviceId>
-                              <arrTime>22.55294535724685</arrTime>
-                              <endTime>22.55294535724685</endTime>
+                              <arrTime>5.0</arrTime>
+                              <endTime>5.0</endTime>
                          </act>
                          <act type="service">
-                              <serviceId>6</serviceId>
-                              <arrTime>32.55294535724685</arrTime>
-                              <endTime>32.55294535724685</endTime>
+                              <serviceId>4</serviceId>
+                              <arrTime>6.0</arrTime>
+                              <endTime>6.0</endTime>
                          </act>
-                         <act type="service">
-                              <serviceId>5</serviceId>
-                              <arrTime>38.55294535724685</arrTime>
-                              <endTime>38.55294535724685</endTime>
-                         </act>
-                         <end>47.15527062428947</end>
+                         <end>11.8309518948453</end>
                     </route>
                </routes>
           </solution>
           <solution>
-               <cost>80.81717441398007</cost>
+               <cost>49.35229272048482</cost>
                <routes>
                     <route>
                          <driverId>noDriver</driverId>
-                         <vehicleId>vehicles@[10,10]</vehicleId>
+                         <vehicleId>vehicle</vehicleId>
+                         <start>0.0</start>
+                         <act type="service">
+                              <serviceId>7</serviceId>
+                              <arrTime>5.656854249492381</arrTime>
+                              <endTime>5.656854249492381</endTime>
+                         </act>
+                         <act type="service">
+                              <serviceId>3</serviceId>
+                              <arrTime>7.0710678118654755</arrTime>
+                              <endTime>7.0710678118654755</endTime>
+                         </act>
+                         <end>12.902019706710776</end>
+                    </route>
+                    <route>
+                         <driverId>noDriver</driverId>
+                         <vehicleId>vehicle</vehicleId>
+                         <start>0.0</start>
+                         <act type="service">
+                              <serviceId>8</serviceId>
+                              <arrTime>5.0</arrTime>
+                              <endTime>5.0</endTime>
+                         </act>
+                         <act type="service">
+                              <serviceId>4</serviceId>
+                              <arrTime>6.0</arrTime>
+                              <endTime>6.0</endTime>
+                         </act>
+                         <end>11.8309518948453</end>
+                    </route>
+                    <route>
+                         <driverId>noDriver</driverId>
+                         <vehicleId>vehicle</vehicleId>
                          <start>0.0</start>
                          <act type="service">
                               <serviceId>2</serviceId>
@@ -256,47 +283,27 @@
                               <endTime>5.830951894845301</endTime>
                          </act>
                          <act type="service">
-                              <serviceId>1</serviceId>
-                              <arrTime>11.8309518948453</arrTime>
-                              <endTime>11.8309518948453</endTime>
+                              <serviceId>6</serviceId>
+                              <arrTime>7.245165457218396</arrTime>
+                              <endTime>7.245165457218396</endTime>
                          </act>
-                         <act type="service">
-                              <serviceId>3</serviceId>
-                              <arrTime>21.8309518948453</arrTime>
-                              <endTime>21.8309518948453</endTime>
-                         </act>
-                         <act type="service">
-                              <serviceId>4</serviceId>
-                              <arrTime>27.8309518948453</arrTime>
-                              <endTime>27.8309518948453</endTime>
-                         </act>
-                         <end>33.6619037896906</end>
+                         <end>12.902019706710776</end>
                     </route>
                     <route>
                          <driverId>noDriver</driverId>
-                         <vehicleId>vehicles@[50,50]</vehicleId>
+                         <vehicleId>vehicle</vehicleId>
                          <start>0.0</start>
                          <act type="service">
-                              <serviceId>7</serviceId>
-                              <arrTime>16.55294535724685</arrTime>
-                              <endTime>16.55294535724685</endTime>
-                         </act>
-                         <act type="service">
-                              <serviceId>8</serviceId>
-                              <arrTime>22.55294535724685</arrTime>
-                              <endTime>22.55294535724685</endTime>
-                         </act>
-                         <act type="service">
-                              <serviceId>6</serviceId>
-                              <arrTime>32.55294535724685</arrTime>
-                              <endTime>32.55294535724685</endTime>
-                         </act>
-                         <act type="service">
                               <serviceId>5</serviceId>
-                              <arrTime>38.55294535724685</arrTime>
-                              <endTime>38.55294535724685</endTime>
+                              <arrTime>4.47213595499958</arrTime>
+                              <endTime>4.47213595499958</endTime>
                          </act>
-                         <end>47.15527062428947</end>
+                         <act type="service">
+                              <serviceId>1</serviceId>
+                              <arrTime>5.8863495173726745</arrTime>
+                              <endTime>5.8863495173726745</endTime>
+                         </act>
+                         <end>11.717301412217974</end>
                     </route>
                </routes>
           </solution>

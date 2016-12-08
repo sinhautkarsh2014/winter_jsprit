@@ -67,8 +67,8 @@ public class JavaApplication1 {
         Builder vehicleBuilder = VehicleImpl.Builder.newInstance("vehicle");
         vehicleBuilder.setStartLocation(Location.newInstance(10, 10));
         vehicleBuilder.setType(vehicleType);
-        VehicleImpl vehicle = vehicleBuilder.build();
-
+        VehicleImpl vehicle1 = vehicleBuilder.build();
+        
 		/*
          * build services at the required locations, each with a capacity-demand of 1.
 		 */
@@ -77,11 +77,15 @@ public class JavaApplication1 {
 
         Service service3 = Service.Builder.newInstance("3").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(15, 7)).build();
         Service service4 = Service.Builder.newInstance("4").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(15, 13)).build();
+        Service service5 = Service.Builder.newInstance("5").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(6, 8)).build();
+        Service service6 = Service.Builder.newInstance("6").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(6, 14)).build();
 
+        Service service7 = Service.Builder.newInstance("7").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(14, 6)).build();
+        Service service8 = Service.Builder.newInstance("8").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(14, 13)).build();    
 
         VehicleRoutingProblem.Builder vrpBuilder = VehicleRoutingProblem.Builder.newInstance();
-        vrpBuilder.addVehicle(vehicle);
-        vrpBuilder.addJob(service1).addJob(service2).addJob(service3).addJob(service4);
+        vrpBuilder.addVehicle(vehicle1);
+        vrpBuilder.addJob(service1).addJob(service2).addJob(service3).addJob(service4).addJob(service5).addJob(service6).addJob(service7).addJob(service8);
 
         VehicleRoutingProblem problem = vrpBuilder.build();
 
