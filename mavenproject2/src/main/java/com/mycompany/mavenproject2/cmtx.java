@@ -20,14 +20,18 @@
  */
 package com.mycompany.mavenproject2;
 
+import au.com.bytecode.opencsv.CSVReader;
 import com.graphhopper.jsprit.core.problem.Location;
 import com.graphhopper.jsprit.core.problem.cost.AbstractForwardVehicleRoutingTransportCosts;
 import com.graphhopper.jsprit.core.problem.driver.Driver;
 import com.graphhopper.jsprit.core.problem.vehicle.Vehicle;
 import com.graphhopper.jsprit.core.util.Coordinate;
 import com.graphhopper.jsprit.core.problem.cost.TransportDistance;
-
 import com.graphhopper.jsprit.core.util.Locations;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
  
 /**
  * @author stefan schroeder
@@ -36,62 +40,67 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
 
    private Locations locations;
 
-    public cmtx(Locations locations) {
+    public cmtx(Locations locations) throws FileNotFoundException, IOException {
         super();
+        this.r1 = new FileReader("cdtmatrix.csv");
         this.locations = locations;
+        this.reader=new CSVReader(r1);
+        this.myEntries = reader.readAll();
     }
     
     @Override
     public String toString() {
         return "[name=cmtx]";
     }
-    
+    FileReader r1;
+    CSVReader reader;
+    List<String[]> myEntries;
+     
     
     @Override
     public double getTransportCost(Location from, Location to, double time, Driver driver, Vehicle vehicle) {
         String f=from.getId();
         String t=to.getId();
+        if(f.equals(t)){double costs=0; return costs;} 
         if (vehicle==null){double costs=99999.9; return costs;}
         String v=vehicle.getId();
-        double costs=2.3;
+        double costs=0;
         if (v.equals("vehicle1")){
-            }
-        else if (v.equals("vehicle2")){if(f.equals("0")&&t.equals("1")||f.equals("1")&&t.equals("0")){costs=68;}
-            else if (f.equals("0")&&t.equals("2")||f.equals("2")&&t.equals("0")){costs=67;/*cost matrix for vehicle2 here*/}
-            else if (f.equals("0")&&t.equals("3")||f.equals("3")&&t.equals("0")){costs=68;/*cost matrix for vehicle3 here*/}
-            else if (f.equals("2")&&t.equals("3")||f.equals("3")&&t.equals("2")){costs=45;/*cost matrix for vehicle4 here*/}
-            else if (f.equals("1")&&t.equals("3")||f.equals("3")&&t.equals("1")){costs=0;/*cost matrix for vehicle5 here*/}
-            else if (f.equals("1")&&t.equals("2")||f.equals("2")&&t.equals("1")){costs=45;/*cost matrix for vehicle6 here*/}}
-        else if (v.equals("vehicle3")){if(f.equals("0")&&t.equals("1")||f.equals("1")&&t.equals("0")){costs=68;}
-            else if (f.equals("0")&&t.equals("2")||f.equals("2")&&t.equals("0")){costs=67;/*cost matrix for vehicle2 here*/}
-            else if (f.equals("0")&&t.equals("3")||f.equals("3")&&t.equals("0")){costs=68;/*cost matrix for vehicle3 here*/}
-            else if (f.equals("2")&&t.equals("3")||f.equals("3")&&t.equals("2")){costs=45;/*cost matrix for vehicle4 here*/}
-            else if (f.equals("1")&&t.equals("3")||f.equals("3")&&t.equals("1")){costs=0;/*cost matrix for vehicle5 here*/}
-            else if (f.equals("1")&&t.equals("2")||f.equals("2")&&t.equals("1")){costs=45;/*cost matrix for vehicle6 here*/}}
-        else if (v.equals("vehicle4")){if(f.equals("0")&&t.equals("1")||f.equals("1")&&t.equals("0")){costs=68;}
-            else if (f.equals("0")&&t.equals("2")||f.equals("2")&&t.equals("0")){costs=67;/*cost matrix for vehicle2 here*/}
-            else if (f.equals("0")&&t.equals("3")||f.equals("3")&&t.equals("0")){costs=68;/*cost matrix for vehicle3 here*/}
-            else if (f.equals("2")&&t.equals("3")||f.equals("3")&&t.equals("2")){costs=45;/*cost matrix for vehicle4 here*/}
-            else if (f.equals("1")&&t.equals("3")||f.equals("3")&&t.equals("1")){costs=0;/*cost matrix for vehicle5 here*/}
-            else if (f.equals("1")&&t.equals("2")||f.equals("2")&&t.equals("1")){costs=45;/*cost matrix for vehicle6 here*/}}
-        else if (v.equals("vehicle5")){if(f.equals("0")&&t.equals("1")||f.equals("1")&&t.equals("0")){costs=68;}
-            else if (f.equals("0")&&t.equals("2")||f.equals("2")&&t.equals("0")){costs=67;/*cost matrix for vehicle2 here*/}
-            else if (f.equals("0")&&t.equals("3")||f.equals("3")&&t.equals("0")){costs=68;/*cost matrix for vehicle3 here*/}
-            else if (f.equals("2")&&t.equals("3")||f.equals("3")&&t.equals("2")){costs=45;/*cost matrix for vehicle4 here*/}
-            else if (f.equals("1")&&t.equals("3")||f.equals("3")&&t.equals("1")){costs=0;/*cost matrix for vehicle5 here*/}
-            else if (f.equals("1")&&t.equals("2")||f.equals("2")&&t.equals("1")){costs=45;/*cost matrix for vehicle6 here*/}}
-        else if (v.equals("vehicle6")){if(f.equals("0")&&t.equals("1")||f.equals("1")&&t.equals("0")){costs=68;}
-            else if (f.equals("0")&&t.equals("2")||f.equals("2")&&t.equals("0")){costs=67;/*cost matrix for vehicle2 here*/}
-            else if (f.equals("0")&&t.equals("3")||f.equals("3")&&t.equals("0")){costs=68;/*cost matrix for vehicle3 here*/}
-            else if (f.equals("2")&&t.equals("3")||f.equals("3")&&t.equals("2")){costs=45;/*cost matrix for vehicle4 here*/}
-            else if (f.equals("1")&&t.equals("3")||f.equals("3")&&t.equals("1")){costs=0;/*cost matrix for vehicle5 here*/}
-            else if (f.equals("1")&&t.equals("2")||f.equals("2")&&t.equals("1")){costs=45;/*cost matrix for vehicle6 here*/}}
-        else if (v.equals("vehicle7")){if(f.equals("0")&&t.equals("1")||f.equals("1")&&t.equals("0")){costs=68;}
-            else if (f.equals("0")&&t.equals("2")||f.equals("2")&&t.equals("0")){costs=67;/*cost matrix for vehicle2 here*/}
-            else if (f.equals("0")&&t.equals("3")||f.equals("3")&&t.equals("0")){costs=68;/*cost matrix for vehicle3 here*/}
-            else if (f.equals("2")&&t.equals("3")||f.equals("3")&&t.equals("2")){costs=45;/*cost matrix for vehicle4 here*/}
-            else if (f.equals("1")&&t.equals("3")||f.equals("3")&&t.equals("1")){costs=0;/*cost matrix for vehicle5 here*/}
-            else if (f.equals("1")&&t.equals("2")||f.equals("2")&&t.equals("1")){costs=45;/*cost matrix for vehicle6 here*/}}
+            int i=1;
+            while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
+                                                  {costs=Integer.parseInt(myEntries.get(i)[2]); break;}
+            i++;
+            if(i==903){break;}}}
+        else if (v.equals("vehicle2")){int i=1;
+            while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
+                                                  {costs=Integer.parseInt(myEntries.get(i)[3]); break;}
+            i++;
+            if(i==903){break;}}}
+        else if (v.equals("vehicle3")){int i=1;
+            while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
+                                                  {costs=Integer.parseInt(myEntries.get(i)[4]); break;}
+            i++;
+            if(i==903){break;}}}
+        else if (v.equals("vehicle4")){int i=1;
+            while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
+                                                  {costs=Integer.parseInt(myEntries.get(i)[5]); break;}
+            i++;
+            if(i==903){break;}}}
+        else if (v.equals("vehicle5")){int i=1;
+            while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
+                                                  {costs=Integer.parseInt(myEntries.get(i)[6]); break;}
+            i++;
+            if(i==903){break;}}}
+        else if (v.equals("vehicle6")){int i=1;
+            while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
+                                                  {costs=Integer.parseInt(myEntries.get(i)[7]); break;}
+            i++;
+            if(i==903){break;}}}
+        else if (v.equals("vehicle7")){int i=1;
+            while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
+                                                  {costs=Integer.parseInt(myEntries.get(i)[8]); break;}
+            i++;
+            if(i==903){break;}}}
 
         
         return costs;
@@ -105,16 +114,16 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
     public double getTransportTime(Location from, Location to, double time, Driver driver, Vehicle vehicle) {
         String f=from.getId();
         String t=to.getId();
-        double tt=22;
+        if(f.equals(t)){double tt=0; return tt;} 
+        double tt=0;
         if (vehicle==null){tt=99999.9; return tt;}
         String v=vehicle.getId();
         /*Time Matrix to be read here*/
-        if(f.equals("0")&&t.equals("1")){tt=68;}
-        else if (f.equals("0")&&t.equals("2")){tt=67;/*cost matrix for vehicle2 here*/}
-        else if (f.equals("0")&&t.equals("3")){tt=68;/*cost matrix for vehicle3 here*/}
-        else if (f.equals("2")&&t.equals("3")){tt=45;/*cost matrix for vehicle4 here*/}
-        else if (f.equals("1")&&t.equals("3")){tt=0;/*cost matrix for vehicle5 here*/}
-        else if (f.equals("1")&&t.equals("2")){tt=45;/*cost matrix for vehicle6 here*/}
+        int i=1;
+            while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
+                                                  {tt=Integer.parseInt(myEntries.get(i)[10]); break;}
+            i++;
+            if(i==903){break;}}
         return tt;
     }
     
@@ -123,16 +132,16 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
 
         String f=from.getId();
         String t=to.getId();
+        if(f.equals(t)){double d=0; return d;} 
         if (vehicle==null){double d=99999; return d;}
         String v=vehicle.getId();
         /*Distance matrix to be read here*/
-        double d=22;
-        if(f.equals("0")&&t.equals("1")){d=40;}
-        else if (f.equals("0")&&t.equals("2")){d=39;/*cost matrix for vehicle2 here*/}
-        else if (f.equals("0")&&t.equals("3")){d=40;/*cost matrix for vehicle3 here*/}
-        else if (f.equals("2")&&t.equals("3")){d=45;/*cost matrix for vehicle4 here*/}
-        else if (f.equals("1")&&t.equals("3")){d=0;/*cost matrix for vehicle5 here*/}
-        else if (f.equals("1")&&t.equals("2")){d=45;/*cost matrix for vehicle6 here*/}
+        double d=0;
+        int i=1;
+            while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
+                                                  {d=Integer.parseInt(myEntries.get(i)[9]); break;}
+            i++;
+            if(i==903){break;}}
         return d;}
     
 }

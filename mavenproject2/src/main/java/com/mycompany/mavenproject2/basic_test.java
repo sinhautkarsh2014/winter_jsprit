@@ -58,9 +58,9 @@ public class basic_test {
         /* get a vehicle type-builder and build a type with the typeId "vehicleType" and one capacity dimension, i.e. weight, and capacity dimension value of 2
          */
         VehicleTypeImpl vehicleType1 = VehicleTypeImpl.Builder.newInstance("vehicleType1")
-                .addCapacityDimension(0, 1196).addCapacityDimension(1, 9000).setCostPerDistance(1)
+                .addCapacityDimension(0, 1196).addCapacityDimension(1, 2528).setCostPerDistance(1)
                 .build();
-        VehicleTypeImpl vehicleType2 = VehicleTypeImpl.Builder.newInstance("vehicleType2")
+       /* VehicleTypeImpl vehicleType2 = VehicleTypeImpl.Builder.newInstance("vehicleType2")
                 .addCapacityDimension(0, 964).addCapacityDimension(1, 6000).setCostPerDistance(1)
                 .build();
         VehicleTypeImpl vehicleType3 = VehicleTypeImpl.Builder.newInstance("vehicleType3")
@@ -77,7 +77,8 @@ public class basic_test {
                 .build();
         VehicleTypeImpl vehicleType7 = VehicleTypeImpl.Builder.newInstance("vehicleType7")
                 .addCapacityDimension(0, 110).addCapacityDimension(1, 1000).setCostPerDistance(1)
-                .build();
+                .build();*/
+       
 
 
         /*
@@ -85,10 +86,10 @@ public class basic_test {
          */
         VehicleImpl.Builder vehicleBuilder1 = VehicleImpl.Builder.newInstance("vehicle1");
         vehicleBuilder1.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder1.setType(vehicleType1);
+        vehicleBuilder1.setType(vehicleType1).setEarliestStart(300).setReturnToDepot(false);
         VehicleImpl vehicle1 = vehicleBuilder1.build();
 
-        VehicleImpl.Builder vehicleBuilder2 = VehicleImpl.Builder.newInstance("vehicle2");
+     /*   VehicleImpl.Builder vehicleBuilder2 = VehicleImpl.Builder.newInstance("vehicle2");
         vehicleBuilder2.setStartLocation(Location.newInstance("0"));
         vehicleBuilder2.setType(vehicleType2);
         VehicleImpl vehicle2 = vehicleBuilder2.build();
@@ -118,31 +119,22 @@ public class basic_test {
         vehicleBuilder7.setType(vehicleType7);
         VehicleImpl vehicle7 = vehicleBuilder7.build();
 
-        FileReader r1 = new FileReader("brittest1.csv");
-        CSVReader reader = new CSVReader(r1);
-        String[] nextLine;
-        int a = 0;
-        while ((nextLine = reader.readNext()) != null) {
-            // nextLine[] is an array of values from the line
-            System.out.println(nextLine[0] + "|" + nextLine[1] + "|" + nextLine[2] + "|" + nextLine[3]);
-
-            a++;
-        }
+       */ 
 
         /*
          * build services at the required locations, each with a capacity-demand of 1.
          */
         Service service1 = Service.Builder.newInstance("1")
                 .setLocation(Location.newInstance("1")).addTimeWindow(630, 1080)
-                .addSizeDimension(0, 111).addSizeDimension(1, 1512).build();
+                .addSizeDimension(0, 1).addSizeDimension(1, 15).build();
 
         Service service2 = Service.Builder.newInstance("2")
                 .setLocation(Location.newInstance("2")).addTimeWindow(630, 1080)
-                .addSizeDimension(0, 119).addSizeDimension(1, 1781).build();
+                .addSizeDimension(0, 287).addSizeDimension(1, 1788).build();
 
         Service service3 = Service.Builder.newInstance("3")
                 .setLocation(Location.newInstance("3")).addTimeWindow(630, 1080)
-                .addSizeDimension(0, 123).addSizeDimension(1, 2514).build();
+                .addSizeDimension(0, 426).addSizeDimension(1, 2514).build();
         /*
 		/*
          * Assume the following symmetric distance-matrix
@@ -165,14 +157,13 @@ public class basic_test {
         //define a matrix-builder building a symmetric matrix
 
         VehicleRoutingProblem.Builder vrpBuilder = VehicleRoutingProblem.Builder.newInstance();
-        vrpBuilder.addJob(service1).addJob(service2)
-                .addJob(service3);
+        vrpBuilder.addJob(service1).addJob(service2).addJob(service3);
 
-        VehicleRoutingTransportCosts routingCosts = new cmtx(vrpBuilder.getLocations()); //which is the default VehicleRoutingTransportCosts in builder above
+        VehicleRoutingTransportCosts routingCosts = new cmtx2(vrpBuilder.getLocations()); //which is the default VehicleRoutingTransportCosts in builder above
         vrpBuilder.setRoutingCost(routingCosts);
 
-        vrpBuilder.addVehicle(vehicle1).addVehicle(vehicle2).addVehicle(vehicle3).addVehicle(vehicle4).addVehicle(vehicle5).addVehicle(vehicle6).addVehicle(vehicle7);
-
+        vrpBuilder.addVehicle(vehicle1);/*.addVehicle(vehicle2).addVehicle(vehicle3).addVehicle(vehicle4).addVehicle(vehicle5).addVehicle(vehicle6).addVehicle(vehicle7);
+*/
         // vrpBuilder.setRoutingCost(new MultiVehTypeCosts(vrpBuilder.getLocations()));
         vrpBuilder.setFleetSize(VehicleRoutingProblem.FleetSize.INFINITE);
         VehicleRoutingProblem problem = vrpBuilder.build();
@@ -186,13 +177,20 @@ public class basic_test {
          * print solution
          */
         SolutionPrinter.print(solution);
-        TransportDistance dist = new cmtx(vrpBuilder.getLocations());
+        TransportDistance dist = new cmtx2(vrpBuilder.getLocations());
         SolutionAnalyser analyser = new SolutionAnalyser(problem, solution, dist);
         for (VehicleRoute route : solution.getRoutes()) {
-            System.out.println("------");
+            System.out.println("-----------------------------");
             System.out.println("vehicleId: " + route.getVehicle().getId());
             System.out.println("load@beginning: " + analyser.getLoadAtBeginning(route));
             System.out.println("load@end: " + analyser.getLoadAtEnd(route));
+            System.out.println("no. of deliveries done by the vehicle: " + analyser.getNumberOfDeliveriesAtEnd(route));
+            System.out.println("vehicle capacity: " + route.getVehicle().getType().getCapacityDimensions());
+            System.out.println("route id " + route.toString());
+            
+
+            
+
             for (TourActivity act : route.getActivities()) {
                 System.out.println("--");
                 System.out.println("actType: " + act.getName() + " demand: " + act.getSize());
@@ -201,6 +199,9 @@ public class basic_test {
                 System.out.println("transportCosts@" + act.getLocation().getId() + ": " + analyser.getVariableTransportCostsAtActivity(act, route));
                 System.out.println("capViolation(after)@" + act.getLocation().getId() + ": " + analyser.getCapacityViolationAfterActivity(act, route));
                 System.out.println("timeWindowViolation@" + act.getLocation().getId() + ": " + analyser.getTimeWindowViolationAtActivity(act, route));
+                System.out.println("time from last activity@" + act.getLocation().getId() + ": " + analyser.getLastTransportTimeAtActivity(act, route));
+                
+
             }
         }
 

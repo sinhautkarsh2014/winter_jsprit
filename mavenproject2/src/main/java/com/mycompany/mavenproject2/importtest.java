@@ -36,7 +36,17 @@ import com.graphhopper.jsprit.util.Examples;
 import au.com.bytecode.opencsv.*;
 import com.graphhopper.jsprit.analysis.toolbox.GraphStreamViewer;
 import com.graphhopper.jsprit.analysis.toolbox.Plotter;
+import com.graphhopper.jsprit.core.algorithm.VehicleRoutingAlgorithmFactory;
+import com.graphhopper.jsprit.core.algorithm.state.StateManager;
+import com.graphhopper.jsprit.core.algorithm.state.StateUpdater;
+import com.graphhopper.jsprit.core.problem.constraint.ConstraintManager;
+import com.graphhopper.jsprit.core.problem.constraint.SoftRouteConstraint;
+import com.graphhopper.jsprit.core.problem.misc.JobInsertionContext;
+import com.graphhopper.jsprit.core.problem.solution.SolutionCostCalculator;
+import com.graphhopper.jsprit.core.problem.solution.route.activity.ActivityVisitor;
+import com.graphhopper.jsprit.core.problem.solution.route.activity.TourActivity.JobActivity;
 import com.graphhopper.jsprit.core.util.Solutions;
+import com.graphhopper.jsprit.core.problem.solution.route.state.RouteAndActivityStateGetter;
 
 
 import java.util.Collection;
@@ -50,7 +60,11 @@ import java.lang.Number;
  *
  * @author schroeder
  */
-public class costmatrixexample {
+public class importtest {
+    
+    public double getCosts(JobInsertionContext iFacts, TourActivity prevAct, TourActivity newAct, TourActivity nextAct, double prevActDepTime)
+    {int a=iFacts.getAssociatedActivities().size();
+    return a;}
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         /*
@@ -191,6 +205,8 @@ public class costmatrixexample {
                 if(p==69){break;}
         p++;}
 
+    
+        
         VehicleRoutingTransportCosts routingCosts = new cmtx(vrpBuilder.getLocations()); //which is the default VehicleRoutingTransportCosts in builder above
         vrpBuilder.setRoutingCost(routingCosts);
 
@@ -200,8 +216,39 @@ public class costmatrixexample {
         vrpBuilder.setFleetSize(VehicleRoutingProblem.FleetSize.INFINITE);
         VehicleRoutingProblem problem = vrpBuilder.build();
         
-VehicleRoutingAlgorithm vra = Jsprit.createAlgorithm(problem);
-        vra.setMaxIterations(100);
+Jsprit.Builder vraBuilder = Jsprit.Builder.newInstance(problem);
+
+StateManager stateManager = new StateManager(problem);
+stateManager.updateLoadStates();
+stateManager.updateTimeWindowStates();
+
+SolutionCostCalculator costCalculator = new SolutionCostCalculator() {
+				
+				@Override
+				public double getCosts(VehicleRoutingProblemSolution solution) {
+					double costs = 0.;
+					for(VehicleRoute route : solution.getRoutes()){
+						costs+=route.getVehicle().getType().getVehicleCostParams().fix;
+						costs+=stateManager.getRouteState(route, RouteAndActivityStateGetter, Double.class);
+						costs+=0;
+					}
+					return costs;
+				}
+				
+};
+
+
+
+
+ConstraintManager constraintManager = new ConstraintManager(problem, stateManager);
+constraintManager.addLoadConstraint();
+constraintManager.addTimeWindowConstraint();
+
+vraBuilder.setStateAndConstraintManager(stateManager, constraintManager);
+
+vraBuilder.addCoreStateAndConstraintStuff(true);
+VehicleRoutingAlgorithm vra = vraBuilder.buildAlgorithm();
+        vra.setMaxIterations(10);
 
         Collection<VehicleRoutingProblemSolution> solutions = vra.searchSolutions();
 

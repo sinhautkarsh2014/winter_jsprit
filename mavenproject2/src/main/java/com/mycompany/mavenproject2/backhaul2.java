@@ -85,7 +85,7 @@ public class backhaul2 {
         StateManager stateManager = new StateManager(vrp);
         ConstraintManager constraintManager = new ConstraintManager(vrp, stateManager);
         constraintManager.addConstraint(new ServiceDeliveriesFirstConstraint(), ConstraintManager.Priority.CRITICAL);
-
+       
 //        vraBuilder.setStateAndConstraintManager(stateManager,constraintManager);
 
 //        VehicleRoutingAlgorithm vra = vraBuilder.build();
