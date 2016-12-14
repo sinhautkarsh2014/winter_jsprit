@@ -37,9 +37,11 @@ import au.com.bytecode.opencsv.*;
 import com.graphhopper.jsprit.analysis.toolbox.GraphStreamViewer;
 import com.graphhopper.jsprit.analysis.toolbox.Plotter;
 import com.graphhopper.jsprit.core.algorithm.VehicleRoutingAlgorithmFactory;
+import com.graphhopper.jsprit.core.algorithm.state.InternalStates;
 import com.graphhopper.jsprit.core.algorithm.state.StateManager;
 import com.graphhopper.jsprit.core.algorithm.state.StateUpdater;
 import com.graphhopper.jsprit.core.problem.constraint.ConstraintManager;
+import com.graphhopper.jsprit.core.problem.constraint.HardRouteConstraint;
 import com.graphhopper.jsprit.core.problem.constraint.SoftRouteConstraint;
 import com.graphhopper.jsprit.core.problem.misc.JobInsertionContext;
 import com.graphhopper.jsprit.core.problem.solution.SolutionCostCalculator;
@@ -62,9 +64,7 @@ import java.lang.Number;
  */
 public class importtest {
     
-    public double getCosts(JobInsertionContext iFacts, TourActivity prevAct, TourActivity newAct, TourActivity nextAct, double prevActDepTime)
-    {int a=iFacts.getAssociatedActivities().size();
-    return a;}
+    
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         /*
@@ -218,37 +218,48 @@ public class importtest {
         
 Jsprit.Builder vraBuilder = Jsprit.Builder.newInstance(problem);
 
-StateManager stateManager = new StateManager(problem);
+final StateManager stateManager = new StateManager(problem);
 stateManager.updateLoadStates();
 stateManager.updateTimeWindowStates();
+ConstraintManager constraintManager = new ConstraintManager(problem, stateManager);
 
-SolutionCostCalculator costCalculator = new SolutionCostCalculator() {
-				
-				@Override
-				public double getCosts(VehicleRoutingProblemSolution solution) {
-					double costs = 0.;
-					for(VehicleRoute route : solution.getRoutes()){
-						costs+=route.getVehicle().getType().getVehicleCostParams().fix;
-						costs+=stateManager.getRouteState(route, RouteAndActivityStateGetter, Double.class);
-						costs+=0;
-					}
-					return costs;
-				}
-				
+HardRouteConstraint accessConstraint = new HardRouteConstraint() {
+
+    @Override
+    public boolean fulfilled(JobInsertionContext iContext) {
+    if (iContext.getRoute().getActivities().size()>=3){return false;}
+    else if(iContext.getRoute().getActivities().size()<3){return true;}
+    return false;}
+
 };
 
+constraintManager.addConstraint(accessConstraint);
 
 
 
-ConstraintManager constraintManager = new ConstraintManager(problem, stateManager);
 constraintManager.addLoadConstraint();
 constraintManager.addTimeWindowConstraint();
 
 vraBuilder.setStateAndConstraintManager(stateManager, constraintManager);
-
-vraBuilder.addCoreStateAndConstraintStuff(true);
+/*this cost calculator can be used to impose rewards and penalties*/
+SolutionCostCalculator costCalculator = new SolutionCostCalculator() {	
+			@Override
+			public double getCosts(VehicleRoutingProblemSolution solution) {
+				double costs = 0.;
+				for(VehicleRoute route : solution.getRoutes()){
+					costs+=route.getVehicle().getType().getVehicleCostParams().fix;
+					costs+=stateManager.getRouteState(route, InternalStates.COSTS, Double.class);
+					//if(route.getActivities().size()>=4){costs+=999999999;}
+					
+				}
+				return costs;
+			}
+		};
+vraBuilder.addCoreStateAndConstraintStuff(true).setProperty(Jsprit.Parameter.FAST_REGRET, "true")
+.setObjectiveFunction(costCalculator).setProperty(Jsprit.Parameter.THREADS, "4");
 VehicleRoutingAlgorithm vra = vraBuilder.buildAlgorithm();
-        vra.setMaxIterations(10);
+        vra.setMaxIterations(100);
+        
 
         Collection<VehicleRoutingProblemSolution> solutions = vra.searchSolutions();
 
@@ -260,6 +271,11 @@ VehicleRoutingAlgorithm vra = vraBuilder.buildAlgorithm();
         SolutionPrinter.print(solution);
         TransportDistance dist = new cmtx(vrpBuilder.getLocations());
         SolutionAnalyser analyser = new SolutionAnalyser(problem, solution, dist);
+        CSVWriter writer = new CSVWriter(new FileWriter("out.csv"), '\t');
+        // feed in your array (or convert your data to an array)
+        String[] entry1="shipping_id#party_id#truck_type_used#weight_load_taken#vehicle_weight_capacity#volume_load_taken#vehicle_volume_capacity".split("#");
+        writer.writeNext(entry1);
+	int i=0;
         for (VehicleRoute route : solution.getRoutes()) {
             System.out.println("------");
             System.out.println("vehicleId: " + route.getVehicle().getId());
@@ -267,7 +283,7 @@ VehicleRoutingAlgorithm vra = vraBuilder.buildAlgorithm();
             System.out.println("load@end: " + analyser.getLoadAtEnd(route));
             System.out.println("no. of deliveries done by the vehicle: " + analyser.getNumberOfDeliveriesAtEnd(route));
             System.out.println("vehicle capacity: " + route.getVehicle().getType().getCapacityDimensions());
-            System.out.println("route id " + route.toString());
+            System.out.println("route id :" + route.toString()); i++;
             for (TourActivity act : route.getActivities()) {
                 System.out.println("--");
                 System.out.println("actType: " + act.getName() + " demand: " + act.getSize());
@@ -277,8 +293,18 @@ VehicleRoutingAlgorithm vra = vraBuilder.buildAlgorithm();
                 System.out.println("capViolation(after)@" + act.getLocation().getId() + ": " + analyser.getCapacityViolationAfterActivity(act, route));
                 System.out.println("timeWindowViolation@" + act.getLocation().getId() + ": " + analyser.getTimeWindowViolationAtActivity(act, route));
                 System.out.println("time from last activity@" + act.getLocation().getId() + ": " + analyser.getLastTransportTimeAtActivity(act, route));
+                String[] entries=new String[7];
+                entries[0]=Integer.toString(i);
+                entries[1]=act.getLocation().getId();
+                entries[2]=route.getVehicle().getId();
+                entries[3]=analyser.getLoadAtEnd(route).toString().split("]")[5].split("=")[1];
+                entries[4]=route.getVehicle().getType().getCapacityDimensions().toString().split("]")[5].split("=")[1];
+                entries[5]=analyser.getLoadAtEnd(route).toString().split("]")[2].split("=")[1];
+                entries[6]=route.getVehicle().getType().getCapacityDimensions().toString().split("]")[2].split("=")[1];
+                writer.writeNext(entries);
             }
         }
+        writer.close();
 
 //        new Plotter(problem, Solutions.bestOf(solutions)).plot("output/yo.png", "po");
     }
