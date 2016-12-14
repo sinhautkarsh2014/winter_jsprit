@@ -155,6 +155,14 @@ public class importtest {
                 sm[a-1]=s;
             }
             else if(nextLine[3].equals("MT")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
+                .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(360, 450)
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).build();
+                  sm[a-1]=s;    }
+            else if(nextLine[3].equals("AD")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
+                .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).build();
+                  sm[a-1]=s;    }
+            else if(nextLine[3].equals("Z1")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
                 .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
                 .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).build();
                   sm[a-1]=s;    }
@@ -258,7 +266,7 @@ SolutionCostCalculator costCalculator = new SolutionCostCalculator() {
 vraBuilder.addCoreStateAndConstraintStuff(true).setProperty(Jsprit.Parameter.FAST_REGRET, "true")
 .setObjectiveFunction(costCalculator).setProperty(Jsprit.Parameter.THREADS, "4");
 VehicleRoutingAlgorithm vra = vraBuilder.buildAlgorithm();
-        vra.setMaxIterations(100);
+        vra.setMaxIterations(3000);
         
 
         Collection<VehicleRoutingProblemSolution> solutions = vra.searchSolutions();
@@ -273,7 +281,7 @@ VehicleRoutingAlgorithm vra = vraBuilder.buildAlgorithm();
         SolutionAnalyser analyser = new SolutionAnalyser(problem, solution, dist);
         CSVWriter writer = new CSVWriter(new FileWriter("out.csv"), '\t');
         // feed in your array (or convert your data to an array)
-        String[] entry1="shipping_id#party_id#truck_type_used#weight_load_taken#vehicle_weight_capacity#volume_load_taken#vehicle_volume_capacity".split("#");
+        String[] entry1="shipping_id#party_id#truck_type_used#weight_demand#volume_demand#weight_load_taken#vehicle_weight_capacity#volume_load_taken#vehicle_volume_capacity".split("#");
         writer.writeNext(entry1);
 	int i=0;
         for (VehicleRoute route : solution.getRoutes()) {
@@ -293,14 +301,16 @@ VehicleRoutingAlgorithm vra = vraBuilder.buildAlgorithm();
                 System.out.println("capViolation(after)@" + act.getLocation().getId() + ": " + analyser.getCapacityViolationAfterActivity(act, route));
                 System.out.println("timeWindowViolation@" + act.getLocation().getId() + ": " + analyser.getTimeWindowViolationAtActivity(act, route));
                 System.out.println("time from last activity@" + act.getLocation().getId() + ": " + analyser.getLastTransportTimeAtActivity(act, route));
-                String[] entries=new String[7];
+                String[] entries=new String[9];
                 entries[0]=Integer.toString(i);
                 entries[1]=act.getLocation().getId();
                 entries[2]=route.getVehicle().getId();
-                entries[3]=analyser.getLoadAtEnd(route).toString().split("]")[5].split("=")[1];
-                entries[4]=route.getVehicle().getType().getCapacityDimensions().toString().split("]")[5].split("=")[1];
-                entries[5]=analyser.getLoadAtEnd(route).toString().split("]")[2].split("=")[1];
-                entries[6]=route.getVehicle().getType().getCapacityDimensions().toString().split("]")[2].split("=")[1];
+                entries[3]=act.getSize().toString().split("]")[5].split("=")[1];
+                entries[4]=act.getSize().toString().split("]")[2].split("=")[1];
+                entries[5]=analyser.getLoadAtEnd(route).toString().split("]")[5].split("=")[1];
+                entries[6]=route.getVehicle().getType().getCapacityDimensions().toString().split("]")[5].split("=")[1];
+                entries[7]=analyser.getLoadAtEnd(route).toString().split("]")[2].split("=")[1];
+                entries[8]=route.getVehicle().getType().getCapacityDimensions().toString().split("]")[2].split("=")[1];
                 writer.writeNext(entries);
             }
         }
