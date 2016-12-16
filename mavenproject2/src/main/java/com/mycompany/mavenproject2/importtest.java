@@ -75,25 +75,25 @@ public class importtest {
         /* get a vehicle type-builder and build a type with the typeId "vehicleType" and one capacity dimension, i.e. weight, and capacity dimension value of 2
          */
         VehicleTypeImpl vehicleType1 = VehicleTypeImpl.Builder.newInstance("vehicleType1")
-                .addCapacityDimension(0, 1196).addCapacityDimension(1, 9000).setCostPerDistance(1)
+                .addCapacityDimension(0, 957).addCapacityDimension(1, 7200).setCostPerDistance(1)
                 .build();
         VehicleTypeImpl vehicleType2 = VehicleTypeImpl.Builder.newInstance("vehicleType2")
-                .addCapacityDimension(0, 964).addCapacityDimension(1, 6000).setCostPerDistance(1)
+                .addCapacityDimension(0, 771).addCapacityDimension(1, 4800).setCostPerDistance(1)
                 .build();
         VehicleTypeImpl vehicleType3 = VehicleTypeImpl.Builder.newInstance("vehicleType3")
-                .addCapacityDimension(0, 920).addCapacityDimension(1, 7000).setCostPerDistance(1)
+                .addCapacityDimension(0, 736).addCapacityDimension(1, 5600).setCostPerDistance(1)
                 .build();
         VehicleTypeImpl vehicleType4 = VehicleTypeImpl.Builder.newInstance("vehicleType4")
-                .addCapacityDimension(0, 850).addCapacityDimension(1, 6000).setCostPerDistance(1)
+                .addCapacityDimension(0, 680).addCapacityDimension(1, 4800).setCostPerDistance(1)
                 .build();
         VehicleTypeImpl vehicleType5 = VehicleTypeImpl.Builder.newInstance("vehicleType5")
-                .addCapacityDimension(0, 613).addCapacityDimension(1, 4500).setCostPerDistance(1)
+                .addCapacityDimension(0, 490).addCapacityDimension(1, 3600).setCostPerDistance(1)
                 .build();
         VehicleTypeImpl vehicleType6 = VehicleTypeImpl.Builder.newInstance("vehicleType6")
-                .addCapacityDimension(0, 330).addCapacityDimension(1, 3000).setCostPerDistance(1)
+                .addCapacityDimension(0, 264).addCapacityDimension(1, 2400).setCostPerDistance(1)
                 .build();
         VehicleTypeImpl vehicleType7 = VehicleTypeImpl.Builder.newInstance("vehicleType7")
-                .addCapacityDimension(0, 110).addCapacityDimension(1, 1000).setCostPerDistance(1)
+                .addCapacityDimension(0, 88).addCapacityDimension(1, 800).setCostPerDistance(1)
                 .build();
 
 
@@ -102,37 +102,37 @@ public class importtest {
          */
         VehicleImpl.Builder vehicleBuilder1 = VehicleImpl.Builder.newInstance("vehicle1");
         vehicleBuilder1.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder1.setType(vehicleType1);
+        vehicleBuilder1.setType(vehicleType1).setReturnToDepot(false);
         VehicleImpl vehicle1 = vehicleBuilder1.build();
 
         VehicleImpl.Builder vehicleBuilder2 = VehicleImpl.Builder.newInstance("vehicle2");
         vehicleBuilder2.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder2.setType(vehicleType2);
+        vehicleBuilder2.setType(vehicleType2).setReturnToDepot(false);
         VehicleImpl vehicle2 = vehicleBuilder2.build();
 
         VehicleImpl.Builder vehicleBuilder3 = VehicleImpl.Builder.newInstance("vehicle3");
         vehicleBuilder3.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder3.setType(vehicleType3);
+        vehicleBuilder3.setType(vehicleType3).setReturnToDepot(false);
         VehicleImpl vehicle3 = vehicleBuilder3.build();
 
         VehicleImpl.Builder vehicleBuilder4 = VehicleImpl.Builder.newInstance("vehicle4");
         vehicleBuilder4.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder4.setType(vehicleType4);
+        vehicleBuilder4.setType(vehicleType4).setReturnToDepot(false);
         VehicleImpl vehicle4 = vehicleBuilder4.build();
 
         VehicleImpl.Builder vehicleBuilder5 = VehicleImpl.Builder.newInstance("vehicle5");
         vehicleBuilder5.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder5.setType(vehicleType5);
+        vehicleBuilder5.setType(vehicleType5).setReturnToDepot(false);
         VehicleImpl vehicle5 = vehicleBuilder5.build();
 
         VehicleImpl.Builder vehicleBuilder6 = VehicleImpl.Builder.newInstance("vehicle6");
         vehicleBuilder6.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder6.setType(vehicleType6);
+        vehicleBuilder6.setType(vehicleType6).setReturnToDepot(false);
         VehicleImpl vehicle6 = vehicleBuilder6.build();
 
         VehicleImpl.Builder vehicleBuilder7 = VehicleImpl.Builder.newInstance("vehicle7");
         vehicleBuilder7.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder7.setType(vehicleType7);
+        vehicleBuilder7.setType(vehicleType7).setReturnToDepot(false);
         VehicleImpl vehicle7 = vehicleBuilder7.build();
 
         FileReader r1 = new FileReader("brittest1.csv");
@@ -151,20 +151,20 @@ public class importtest {
             else
             {if(nextLine[3].equals("AW")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
                 .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).build();
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("AW").build();
                 sm[a-1]=s;
             }
             else if(nextLine[3].equals("MT")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
-                .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(360, 450)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).build();
+                .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(360, 600)
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("MT").build();
                   sm[a-1]=s;    }
             else if(nextLine[3].equals("AD")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
                 .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).build();
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("AD").build();
                   sm[a-1]=s;    }
             else if(nextLine[3].equals("Z1")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
                 .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).build();
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("Z1").build();
                   sm[a-1]=s;    }
             }
             a++;
@@ -235,8 +235,10 @@ HardRouteConstraint accessConstraint = new HardRouteConstraint() {
 
     @Override
     public boolean fulfilled(JobInsertionContext iContext) {
-    if (iContext.getRoute().getActivities().size()>=3){return false;}
-    else if(iContext.getRoute().getActivities().size()<3){return true;}
+    int a=iContext.getRoute().getActivities().size();
+    if (iContext.getJob().getName().equals("MT")){return true;}    
+    if (a>=3){return false;}
+    else if(a<3){return true;}
     return false;}
 
 };
@@ -266,7 +268,7 @@ SolutionCostCalculator costCalculator = new SolutionCostCalculator() {
 vraBuilder.addCoreStateAndConstraintStuff(true).setProperty(Jsprit.Parameter.FAST_REGRET, "true")
 .setObjectiveFunction(costCalculator).setProperty(Jsprit.Parameter.THREADS, "4");
 VehicleRoutingAlgorithm vra = vraBuilder.buildAlgorithm();
-        vra.setMaxIterations(3000);
+        vra.setMaxIterations(2000);
         
 
         Collection<VehicleRoutingProblemSolution> solutions = vra.searchSolutions();
