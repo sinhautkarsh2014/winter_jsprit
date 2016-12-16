@@ -151,20 +151,20 @@ public class importtest {
             else
             {if(nextLine[3].equals("AW")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
                 .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("AW").build();
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("AW"+"-"+nextLine[0]).build();
                 sm[a-1]=s;
             }
             else if(nextLine[3].equals("MT")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
                 .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(360, 600)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("MT").build();
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("MT"+"-"+nextLine[0]).build();
                   sm[a-1]=s;    }
             else if(nextLine[3].equals("AD")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
                 .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("AD").build();
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("AD"+"-"+nextLine[0]).build();
                   sm[a-1]=s;    }
             else if(nextLine[3].equals("Z1")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
                 .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("Z1").build();
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("Z1"+"-"+nextLine[0]).build();
                   sm[a-1]=s;    }
             }
             a++;
@@ -236,7 +236,9 @@ HardRouteConstraint accessConstraint = new HardRouteConstraint() {
     @Override
     public boolean fulfilled(JobInsertionContext iContext) {
     int a=iContext.getRoute().getActivities().size();
-    if (iContext.getJob().getName().equals("MT")){return true;}    
+    if (iContext.getJob().getName().split("-")[0].equals("MT")){return true;}
+    //if (a==3){}
+    if (a==2){if (!iContext.getRoute().getActivities().get(0).getLocation().getId().equals(iContext.getJob().getName().split("-")[1])&& !iContext.getRoute().getActivities().get(0).getLocation().getId().equals(iContext.getJob().getName().split("-")[1])){return false;}}
     if (a>=3){return false;}
     else if(a<3){return true;}
     return false;}
@@ -268,7 +270,7 @@ SolutionCostCalculator costCalculator = new SolutionCostCalculator() {
 vraBuilder.addCoreStateAndConstraintStuff(true).setProperty(Jsprit.Parameter.FAST_REGRET, "true")
 .setObjectiveFunction(costCalculator).setProperty(Jsprit.Parameter.THREADS, "4");
 VehicleRoutingAlgorithm vra = vraBuilder.buildAlgorithm();
-        vra.setMaxIterations(2000);
+        vra.setMaxIterations(1000);
         
 
         Collection<VehicleRoutingProblemSolution> solutions = vra.searchSolutions();
