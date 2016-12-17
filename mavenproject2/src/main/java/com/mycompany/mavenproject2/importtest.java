@@ -149,22 +149,26 @@ public class importtest {
             if (a==0){System.out.println(nextLine[0] + "|" + nextLine[1] + "|" + nextLine[2] + "|" + nextLine[3]);
             }
             else
-            {if(nextLine[3].equals("AW")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
+            {if(nextLine[4].equals("ACD")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
                 .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("AW"+"-"+nextLine[0]).build();
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("ACD"+"-"+nextLine[0]+"-"+nextLine[4]).build();
                 sm[a-1]=s;
             }
-            else if(nextLine[3].equals("MT")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
+            else if(nextLine[4].equals("MT")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
                 .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(360, 600)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("MT"+"-"+nextLine[0]).build();
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("MT"+"-"+nextLine[0]+"-"+nextLine[4]).build();
                   sm[a-1]=s;    }
-            else if(nextLine[3].equals("AD")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
+            else if(nextLine[4].equals("Upcountry")){if (nextLine[3].equals("MT")){Service s = Service.Builder.newInstance(Integer.toString(a-1)+10000)
+                    .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
+                    .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("MT"+"-"+nextLine[0]+"-"+nextLine[4]).build();
+                    sm[a-1]=s; }  
+                     else {Service s = Service.Builder.newInstance(Integer.toString(a-1))
+                    .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
+                    .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("Upcountry"+"-"+nextLine[0]+"-"+nextLine[4]).build();
+                     sm[a-1]=s; } }
+            else if(nextLine[4].equals("GT")){Service s = Service.Builder.newInstance(Integer.toString(a-1)+1000)
                 .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("AD"+"-"+nextLine[0]).build();
-                  sm[a-1]=s;    }
-            else if(nextLine[3].equals("Z1")){Service s = Service.Builder.newInstance(Integer.toString(a-1))
-                .setLocation(Location.newInstance(nextLine[0])).addTimeWindow(630, 1080)
-                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("Z1"+"-"+nextLine[0]).build();
+                .addSizeDimension(0, Integer.parseInt(nextLine[2])).addSizeDimension(1,Integer.parseInt(nextLine[1].replaceAll(",", "")) ).setName("GT"+"-"+nextLine[0]+"-"+nextLine[4]).build();
                   sm[a-1]=s;    }
             }
             a++;
@@ -237,8 +241,16 @@ HardRouteConstraint accessConstraint = new HardRouteConstraint() {
     public boolean fulfilled(JobInsertionContext iContext) {
     int a=iContext.getRoute().getActivities().size();
     if (iContext.getJob().getName().split("-")[0].equals("MT")){return true;}
-    //if (a==3){}
-    if (a==2){if (!iContext.getRoute().getActivities().get(0).getLocation().getId().equals(iContext.getJob().getName().split("-")[1])&& !iContext.getRoute().getActivities().get(0).getLocation().getId().equals(iContext.getJob().getName().split("-")[1])){return false;}}
+    
+     
+    if (a==3){if (iContext.getRoute().getActivities().get(0).getLocation().getId().equals(iContext.getJob().getName().split("-")[1])&&iContext.getRoute().getActivities().get(1).getLocation().getId().equals(iContext.getRoute().getActivities().get(2).getLocation().getId())){return true;}
+              if (iContext.getRoute().getActivities().get(1).getLocation().getId().equals(iContext.getJob().getName().split("-")[1])&&iContext.getRoute().getActivities().get(0).getLocation().getId().equals(iContext.getRoute().getActivities().get(2).getLocation().getId())){return true;}
+              if (iContext.getRoute().getActivities().get(2).getLocation().getId().equals(iContext.getJob().getName().split("-")[1])&&iContext.getRoute().getActivities().get(1).getLocation().getId().equals(iContext.getRoute().getActivities().get(1).getLocation().getId())){return true;}
+              if (iContext.getRoute().getActivities().get(0).getLocation().getId().equals(iContext.getJob().getName().split("-")[1])&&iContext.getRoute().getActivities().get(1).getLocation().getId().equals(iContext.getRoute().getActivities().get(2).getLocation().getId())&&iContext.getRoute().getActivities().get(0).getLocation().getId().equals(iContext.getRoute().getActivities().get(2).getLocation().getId())){return true;}
+             }
+    if (a==2){if (!iContext.getRoute().getActivities().get(0).getLocation().getId().equals(iContext.getJob().getName().split("-")[1])&& !iContext.getRoute().getActivities().get(0).getLocation().getId().equals(iContext.getJob().getName().split("-")[1])){return false;}
+               }
+    
     if (a>=3){return false;}
     else if(a<3){return true;}
     return false;}
