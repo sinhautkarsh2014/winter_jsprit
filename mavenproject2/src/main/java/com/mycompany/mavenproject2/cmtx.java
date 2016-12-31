@@ -70,6 +70,20 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                                                   {dist=Integer.parseInt(myEntries.get(di)[9]); break;}
             di++;
             if(di==1653){break;}}
+        double distleg1=0;
+        int d1k=1;
+        while(true){if("0".equals(myEntries.get(d1k)[0])&&f.equals(myEntries.get(d1k)[1]))
+                        {distleg1=Integer.parseInt(myEntries.get(d1k)[9]); break;}
+                         d1k++;
+                         if(d1k==57){break;}
+                        }
+        double distleg2=0;
+        int d2k=1;
+        while(true){if("0".equals(myEntries.get(d2k)[0])&&t.equals(myEntries.get(d2k)[1]))
+                        {distleg2=Integer.parseInt(myEntries.get(d2k)[9]); break;}
+                         d2k++;
+                         if(d2k==57){break;}
+                        }
         if(f.equals(t)){double costs=0; return costs;} 
         if (vehicle==null){double costs=99999.9; return costs;}
         String v=vehicle.getId();
@@ -77,24 +91,24 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
         if (v.equals("vehicle1")){
             int i=1;
             while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
-                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; break;}
+                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; break;} // Clubbing Restrictions
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
                                      {costs_to=Integer.parseInt(myEntries.get(j)[2]); break;}
                                                  j++;
-                                                 if(j==41){break;}
+                                                 if(j==57){break;}
                                                   }       
                                      int k=1;
                                      double costs_from=0;
                                      while(true){if("0".equals(myEntries.get(k)[0])&&f.equals(myEntries.get(k)[1]))
                                      {costs_from=Integer.parseInt(myEntries.get(k)[2]); break;}
                                                  k++;
-                                                 if(k==41){break;}
+                                                 if(k==57){break;}
                                                   } 
                                       costs=java.lang.Math.max(0,costs_to-costs_from)+300;                  }
                           
@@ -108,20 +122,21 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
                                      {costs_to=Integer.parseInt(myEntries.get(j)[3]); break;}
                                                  j++;
-                                                 if(j==41){break;}
+                                                 if(j==57){break;}
                                                   }       
                                      int k=1;
                                      double costs_from=0;
                                      while(true){if("0".equals(myEntries.get(k)[0])&&f.equals(myEntries.get(k)[1]))
                                      {costs_from=Integer.parseInt(myEntries.get(k)[3]); break;}
                                                  k++;
-                                                 if(k==41){break;}
+                                                 if(k==57){break;}
                                                   } 
                                       costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                         }
                           
@@ -135,20 +150,20 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
                                      {costs_to=Integer.parseInt(myEntries.get(j)[4]); break;}
                                                  j++;
-                                                 if(j==41){break;}
+                                                 if(j==57){break;}
                                                   }       
                                      int k=1;
                                      double costs_from=0;
                                      while(true){if("0".equals(myEntries.get(k)[0])&&f.equals(myEntries.get(k)[1]))
                                      {costs_from=Integer.parseInt(myEntries.get(k)[4]); break;}
                                                  k++;
-                                                 if(k==41){break;}
+                                                 if(k==57){break;}
                                                   } 
                                       costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                       
                                                                                }
@@ -163,20 +178,20 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
                                      {costs_to=Integer.parseInt(myEntries.get(j)[5]); break;}
                                                  j++;
-                                                 if(j==41){break;}
+                                                 if(j==57){break;}
                                                   }       
                                      int k=1;
                                      double costs_from=0;
                                      while(true){if("0".equals(myEntries.get(k)[0])&&f.equals(myEntries.get(k)[1]))
                                      {costs_from=Integer.parseInt(myEntries.get(k)[5]); break;}
                                                  k++;
-                                                 if(k==41){break;}
+                                                 if(k==57){break;}
                                                   } 
                                       costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                        
                                                                                }
@@ -191,20 +206,20 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
                                      {costs_to=Integer.parseInt(myEntries.get(j)[6]); break;}
                                                  j++;
-                                                 if(j==41){break;}
+                                                 if(j==57){break;}
                                                   }       
                                      int k=1;
                                      double costs_from=0;
                                      while(true){if("0".equals(myEntries.get(k)[0])&&f.equals(myEntries.get(k)[1]))
                                      {costs_from=Integer.parseInt(myEntries.get(k)[6]); break;}
                                                  k++;
-                                                 if(k==41){break;}
+                                                 if(k==57){break;}
                                                   } 
                                       costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                      
                                                                                }
@@ -219,20 +234,20 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
                                      {costs_to=Integer.parseInt(myEntries.get(j)[7]); break;}
                                                  j++;
-                                                 if(j==41){break;}
+                                                 if(j==57){break;}
                                                   }       
                                      int k=1;
                                      double costs_from=0;
                                      while(true){if("0".equals(myEntries.get(k)[0])&&f.equals(myEntries.get(k)[1]))
                                      {costs_from=Integer.parseInt(myEntries.get(k)[7]); break;}
                                                  k++;
-                                                 if(k==41){break;}
+                                                 if(k==57){break;}
                                                   } 
                                       costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                           
                                                                                }
@@ -247,20 +262,20 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
                                      {costs_to=Integer.parseInt(myEntries.get(j)[8]); break;}
                                                  j++;
-                                                 if(j==41){break;}
+                                                 if(j==57){break;}
                                                   }       
                                      int k=1;
                                      double costs_from=0;
                                      while(true){if("0".equals(myEntries.get(k)[0])&&f.equals(myEntries.get(k)[1]))
                                      {costs_from=Integer.parseInt(myEntries.get(k)[8]); break;}
                                                  k++;
-                                                 if(k==41){break;}
+                                                 if(k==57){break;}
                                                   } 
                                       costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                         
                                                                                }

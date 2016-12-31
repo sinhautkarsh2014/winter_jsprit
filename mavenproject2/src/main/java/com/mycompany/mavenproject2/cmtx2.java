@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 /**
- *
+ *@author utkarsh sinha
  */
 package com.mycompany.mavenproject2;
 
@@ -70,6 +70,20 @@ public class cmtx2 extends AbstractForwardVehicleRoutingTransportCosts implement
                                                   {dist=Integer.parseInt(myEntries.get(di)[9]); break;}
             di++;
             if(di==903){break;}}
+        double distleg1=0;
+        int d1k=1;
+        while(true){if("0".equals(myEntries.get(d1k)[0])&&f.equals(myEntries.get(d1k)[1]))
+                        {distleg1=Integer.parseInt(myEntries.get(d1k)[9]); break;}
+                         d1k++;
+                         if(d1k==41){break;}
+                        }
+        double distleg2=0;
+        int d2k=1;
+        while(true){if("0".equals(myEntries.get(d2k)[0])&&t.equals(myEntries.get(d2k)[1]))
+                        {distleg2=Integer.parseInt(myEntries.get(d2k)[9]); break;}
+                         d2k++;
+                         if(d2k==41){break;}
+                        }
         if(f.equals(t)){double costs=0; return costs;} 
         if (vehicle==null){double costs=99999.9; return costs;}
         String v=vehicle.getId();
@@ -77,11 +91,11 @@ public class cmtx2 extends AbstractForwardVehicleRoutingTransportCosts implement
         if (v.equals("vehicle1")){
             int i=1;
             while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
-                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.3)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -96,19 +110,19 @@ public class cmtx2 extends AbstractForwardVehicleRoutingTransportCosts implement
                                                  k++;
                                                  if(k==41){break;}
                                                   } 
-                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300;                  }
-                          
+                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300; return costs;                   }
+                          else if(!((!f.equals("0"))||(!t.equals("0")))){costs=99999; return costs;}
                           else {costs=Integer.parseInt(myEntries.get(i)[2]); break;}
                           }
             i++;
             if(i==903){break;}}}
         else if (v.equals("vehicle2")){int i=1;
             while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
-                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.3)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -123,19 +137,19 @@ public class cmtx2 extends AbstractForwardVehicleRoutingTransportCosts implement
                                                  k++;
                                                  if(k==41){break;}
                                                   } 
-                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                         }
-                          
+                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300; return costs;                                          }
+                          else if(!((!f.equals("0"))||(!t.equals("0")))){costs=99999; return costs;}
                           else {costs=Integer.parseInt(myEntries.get(i)[3]); break;}
                           }
             i++;
             if(i==903){break;}}}
         else if (v.equals("vehicle3")){int i=1;
             while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
-                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.3)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -150,20 +164,20 @@ public class cmtx2 extends AbstractForwardVehicleRoutingTransportCosts implement
                                                  k++;
                                                  if(k==41){break;}
                                                   } 
-                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                       
+                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300; return costs;                                        
                                                                                }
-                          
+                          else if(!((!f.equals("0"))||(!t.equals("0")))){costs=99999; return costs;}
                           else {costs=Integer.parseInt(myEntries.get(i)[4]); break;}
                           }
             i++;
             if(i==903){break;}}}
         else if (v.equals("vehicle4")){int i=1;
             while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
-                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.3)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -178,20 +192,20 @@ public class cmtx2 extends AbstractForwardVehicleRoutingTransportCosts implement
                                                  k++;
                                                  if(k==41){break;}
                                                   } 
-                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                        
+                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300; return costs;                                         
                                                                                }
-                          
+                          else if(!((!f.equals("0"))||(!t.equals("0")))){costs=99999; return costs;}
                           else {costs=Integer.parseInt(myEntries.get(i)[5]); break;}
                           }
             i++;
             if(i==903){break;}}}
         else if (v.equals("vehicle5")){int i=1;
             while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
-                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.3)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -206,20 +220,20 @@ public class cmtx2 extends AbstractForwardVehicleRoutingTransportCosts implement
                                                  k++;
                                                  if(k==41){break;}
                                                   } 
-                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                      
+                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300; return costs;                                       
                                                                                }
-                          
+                          else if(!((!f.equals("0"))||(!t.equals("0")))){costs=99999; return costs;}
                           else {costs=Integer.parseInt(myEntries.get(i)[6]); break;}
                           }
             i++;
             if(i==903){break;}}}
         else if (v.equals("vehicle6")){int i=1;
             while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
-                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.3)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -234,20 +248,20 @@ public class cmtx2 extends AbstractForwardVehicleRoutingTransportCosts implement
                                                  k++;
                                                  if(k==41){break;}
                                                   } 
-                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                           
+                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300; return costs;                                            
                                                                                }
-                          
+                          else if(!((!f.equals("0"))||(!t.equals("0")))){costs=99999; return costs;}
                           else {costs=Integer.parseInt(myEntries.get(i)[7]); break;}
                           }
             i++;
             if(i==903){break;}}}
         else if (v.equals("vehicle7")){int i=1;
             while(true){if(f.equals(myEntries.get(i)[0])&&t.equals(myEntries.get(i)[1])||f.equals(myEntries.get(i)[1])&&t.equals(myEntries.get(i)[0]))
-                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist<=105)
+                          {if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[11].equals("MT")||myEntries.get(i)[12].equals("MT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; return costs;}
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.3)*distleg2)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -262,9 +276,9 @@ public class cmtx2 extends AbstractForwardVehicleRoutingTransportCosts implement
                                                  k++;
                                                  if(k==41){break;}
                                                   } 
-                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300;                                         
+                                      costs=java.lang.Math.max(0,costs_to-costs_from)+300; return costs;                                          
                                                                                }
-                          
+                          else if(!((!f.equals("0"))||(!t.equals("0")))){costs=99999; return costs;}
                           else {costs=Integer.parseInt(myEntries.get(i)[8]); break;}
                           }
             i++;

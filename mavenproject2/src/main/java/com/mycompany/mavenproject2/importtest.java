@@ -46,10 +46,9 @@ import java.io.*;
 import java.util.List;
 
 /**
- * Illustrates how you can use jsprit with an already compiled distance and time
- * matrix.
+ * Illustrates how you can use jsprit for brittania problem.
  *
- * @author schroeder
+ * @author utkarsh sinha
  */
 public class importtest {
 
@@ -168,40 +167,7 @@ public class importtest {
             a++;
         }
 
-        /*
-         * build services at the required locations, each with a capacity-demand of 1.
-         */
- /*  Service service1 = Service.Builder.newInstance("1")
-                .setLocation(Location.newInstance("1")).addTimeWindow(630, 1080)
-                .addSizeDimension(0, 111).addSizeDimension(1, 1512).build();
-
-        Service service2 = Service.Builder.newInstance("2")
-                .setLocation(Location.newInstance("2")).addTimeWindow(630, 1080)
-                .addSizeDimension(0, 119).addSizeDimension(1, 1781).build();
-
-        Service service3 = Service.Builder.newInstance("3")
-                .setLocation(Location.newInstance("3")).addTimeWindow(630, 1080)
-                .addSizeDimension(0, 123).addSizeDimension(1, 2514).build();
-        /*
-		/*
-         * Assume the following symmetric distance-matrix
-		 * from,to,distance
-		 * 0,1,10.0
-		 * 0,2,20.0
-		 * 0,3,5.0
-		 * 1,2,4.0
-		 * 1,3,1.0
-		 * 2,3,2.0
-		 *
-		 * and this time-matrix
-		 * 0,1,5.0
-		 * 0,2,10.0
-		 * 0,3,2.5
-		 * 1,2,2.0
-		 * 1,3,0.5
-		 * 2,3,1.0
-         */
-        //define a matrix-builder building a symmetric matrix
+       
         VehicleRoutingProblem.Builder vrpBuilder = VehicleRoutingProblem.Builder.newInstance();
         int p = 0;
         while (true) {
@@ -272,68 +238,9 @@ public class importtest {
             }
 
         };
-        /*
-HardRouteConstraint tmodConstraint = new HardRouteConstraint() {
-
-    @Override
-    public boolean fulfilled(JobInsertionContext iContext) {
-    int a=iContext.getRoute().getActivities().size();
-    if (a==3){String t=iContext.getRoute().getActivities().get(2).getLocation().getId();
-              String j=iContext.getJob().getName().split("-")[1];
-            int i=1;
-            double ctv1=0;
-            while(true){if(t.equals(myEntries2.get(i)[1]))
-                              { break;}
-            i++;
-            if(i==41){break;}}
-            int k=1;
-            double cjv1=0;
-            while(true){if(j.equals(myEntries2.get(k)[1]))
-                              { break;}
-            k++;
-            if(k==41){break;}}
-            if (k>i){return false;}
-           }
-    else if (a==2){
-
-            String t=iContext.getRoute().getActivities().get(1).getLocation().getId();
-            String j=iContext.getJob().getName().split("-")[1];
-            int i=1;
-            double ctv1=0;
-            while(true){if(t.equals(myEntries2.get(i)[1]))
-                              { break;}
-            i++;
-            if(i==41){break;}}
-            int k=1;
-            double cjv1=0;
-            while(true){if(j.equals(myEntries2.get(k)[1]))
-                              { break;}
-            k++;
-            if(k==41){break;}}
-            if (k>i){return false;}
-}
-    else if (a==1){String t=iContext.getRoute().getActivities().get(0).getLocation().getId();
-              String j=iContext.getJob().getName().split("-")[1];
-            int i=1;
-            double ctv1=0;
-            while(true){if(t.equals(myEntries2.get(i)[1]))
-                              { break;}
-            i++;
-            if(i==41){break;}}
-            int k=1;
-            double cjv1=0;
-            while(true){if(j.equals(myEntries2.get(k)[1]))
-                              { break;}
-            k++;
-            if(k==41){break;}}
-            if (k>i){return false;}
-               }
-    return true;}
-
-};*/
+       
 
         constraintManager.addConstraint(accessConstraint);
-//constraintManager.addConstraint(tmodConstraint);
 
         constraintManager.addLoadConstraint();
         constraintManager.addTimeWindowConstraint();
@@ -349,58 +256,7 @@ HardRouteConstraint tmodConstraint = new HardRouteConstraint() {
                     costs += route.getVehicle().getType().getVehicleCostParams().fix;
                     costs += stateManager.getRouteState(route, InternalStates.COSTS, Double.class);
 //					
-                    /* int a=route.getActivities().size();
-                                        if (a==4){String t=route.getActivities().get(3).getLocation().getId();
-                                                  String j=route.getActivities().get(2).getLocation().getId();
-                                                  int i=1;
-                                                  double ct=0;
-                                                  while(true){if(t.equals(myEntries2.get(i)[1]))
-                                                                          {ct=Integer.parseInt(myEntries2.get(i)[2]); break;}
-                                                              i++;
-                                                              if(i==41){break;}}
-                                                  int k=1;
-                                                  double cj=0;
-                                                  while(true){if(j.equals(myEntries2.get(k)[1]))
-                                                                          {cj=Integer.parseInt(myEntries2.get(i)[2]); break;}
-                                                              k++;
-                                                              if(k==41){break;}}
-                                                  if (cj>ct){costs-=ct; costs+=cj;}
-                                                  if (ct>cj){costs-=cj; costs+=ct;}
-                                                  }
-                                        if (a==3){String t=route.getActivities().get(2).getLocation().getId();
-                                                  String j=route.getActivities().get(1).getLocation().getId();
-                                                  int i=1;
-                                                  double ct=0;
-                                                  while(true){if(t.equals(myEntries2.get(i)[1]))
-                                                                          {ct=Integer.parseInt(myEntries2.get(i)[2]); break;}
-                                                              i++;
-                                                              if(i==41){break;}}
-                                                  int k=1;
-                                                  double cj=0;
-                                                  while(true){if(j.equals(myEntries2.get(k)[1]))
-                                                                          {cj=Integer.parseInt(myEntries2.get(i)[2]); break;}
-                                                              k++;
-                                                              if(k==41){break;}}
-                                                  if (cj>ct){costs-=ct; costs+=cj;}
-                                                  if (ct>cj){costs-=cj; costs+=ct;}
-                                                  }
-    else if (a==2){String t=route.getActivities().get(1).getLocation().getId();
-                                                  String j=route.getActivities().get(0).getLocation().getId();
-                                                  int i=1;
-                                                  double ct=0;
-                                                  while(true){if(t.equals(myEntries2.get(i)[1]))
-                                                                          {ct=Integer.parseInt(myEntries2.get(i)[2]); break;}
-                                                              i++;
-                                                              if(i==41){break;}}
-                                                  int k=1;
-                                                  double cj=0;
-                                                  while(true){if(j.equals(myEntries2.get(k)[1]))
-                                                                          {cj=Integer.parseInt(myEntries2.get(i)[2]); break;}
-                                                              k++;
-                                                              if(k==41){break;}}
-                                                  if (cj>ct){costs-=ct; costs+=cj;}
-                                                  if (ct>cj){costs-=cj; costs+=ct;}
-                                                  }*/
+                    
                 }
 
                 return costs;
@@ -409,7 +265,7 @@ HardRouteConstraint tmodConstraint = new HardRouteConstraint() {
         vraBuilder.addCoreStateAndConstraintStuff(true)
                 .setProperty(Jsprit.Parameter.FAST_REGRET, "true").setProperty(Jsprit.Parameter.THREADS, "4");
         VehicleRoutingAlgorithm vra = vraBuilder.buildAlgorithm();
-        vra.setMaxIterations(2000);
+        vra.setMaxIterations(1000);
 
         Collection<VehicleRoutingProblemSolution> solutions = vra.searchSolutions();
 
