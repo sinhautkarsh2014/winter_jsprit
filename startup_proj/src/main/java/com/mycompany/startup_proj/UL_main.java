@@ -31,6 +31,7 @@ import com.graphhopper.jsprit.core.problem.solution.route.VehicleRoute;
 import com.graphhopper.jsprit.core.problem.solution.route.activity.TourActivity;
 import com.graphhopper.jsprit.core.problem.vehicle.VehicleImpl;
 import com.graphhopper.jsprit.core.problem.vehicle.VehicleTypeImpl;
+import com.graphhopper.jsprit.core.problem.vehicle.Vehicle;
 import com.graphhopper.jsprit.core.reporting.SolutionPrinter;
 import com.graphhopper.jsprit.util.Examples;
 import au.com.bytecode.opencsv.*;
@@ -54,7 +55,7 @@ import java.util.ArrayList;
  *
  * @author utkarsh sinha
  */
-public class incremental {
+public class UL_main {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         /*
@@ -64,66 +65,106 @@ public class incremental {
 
         /* get a vehicle type-builder and build a type with the typeId "vehicleType" and one capacity dimension, i.e. weight, and capacity dimension value of 2
          */
-        VehicleTypeImpl vehicleType1 = VehicleTypeImpl.Builder.newInstance("vehicleType1")
-                .addCapacityDimension(0, 957).addCapacityDimension(1, 7200).setCostPerDistance(0)
-                .build();
-        VehicleTypeImpl vehicleType2 = VehicleTypeImpl.Builder.newInstance("vehicleType2")
-                .addCapacityDimension(0, 771).addCapacityDimension(1, 4800).setCostPerDistance(0)
-                .build();
-        VehicleTypeImpl vehicleType3 = VehicleTypeImpl.Builder.newInstance("vehicleType3")
-                .addCapacityDimension(0, 736).addCapacityDimension(1, 5600).setCostPerDistance(0)
-                .build();
-        VehicleTypeImpl vehicleType4 = VehicleTypeImpl.Builder.newInstance("vehicleType4")
-                .addCapacityDimension(0, 680).addCapacityDimension(1, 4800).setCostPerDistance(0)
-                .build();
-        VehicleTypeImpl vehicleType5 = VehicleTypeImpl.Builder.newInstance("vehicleType5")
-                .addCapacityDimension(0, 490).addCapacityDimension(1, 3600).setCostPerDistance(0)
-                .build();
-        VehicleTypeImpl vehicleType6 = VehicleTypeImpl.Builder.newInstance("vehicleType6")
-                .addCapacityDimension(0, 264).addCapacityDimension(1, 2400).setCostPerDistance(0)
-                .build();
-        VehicleTypeImpl vehicleType7 = VehicleTypeImpl.Builder.newInstance("vehicleType7")
-                .addCapacityDimension(0, 88).addCapacityDimension(1, 800).setCostPerDistance(0)
-                .build();
+        VehicleTypeImpl E1 = VehicleTypeImpl.Builder.newInstance("E1")
+                .addCapacityDimension(0, 28000).build();
+        VehicleTypeImpl E2 = VehicleTypeImpl.Builder.newInstance("E2")
+                .addCapacityDimension(0, 22500).build();
+        VehicleTypeImpl E3 = VehicleTypeImpl.Builder.newInstance("E3")
+                .addCapacityDimension(0, 29000).build();
+        VehicleTypeImpl E4 = VehicleTypeImpl.Builder.newInstance("E4")
+                .addCapacityDimension(0, 5500).build();
+        
 
 
         /*Build vehicles using vehicle types
          */
-        VehicleImpl.Builder vehicleBuilder1 = VehicleImpl.Builder.newInstance("vehicle1");
-        vehicleBuilder1.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder1.setType(vehicleType1).setReturnToDepot(false);
-        VehicleImpl vehicle1 = vehicleBuilder1.build();
+        
+        /*Location of depots*/
+        String[] depots ={"80121","67050","26013","20098","57100","41100","12011","4014","40017","42025","41011","63037","45030","63035","88040","20043","47023","60012","64024"};
+        
+        /*Collection of all vehicles*/
+        Collection<Vehicle> allvehicles=new ArrayList<Vehicle>();
+        
+        /*E1-Type Builder loop*/
+        String[] serviceproviders_E1 = new String[7];
+        serviceproviders_E1[0]="T1087356";
+        serviceproviders_E1[1]="T1105438";
+        serviceproviders_E1[2]="T18833";
+        serviceproviders_E1[3]="T201601";
+        serviceproviders_E1[4]="T204767";
+        serviceproviders_E1[5]="T216130";
+        serviceproviders_E1[6]="T50283698";
+        
+        for (int i=0; i<19; i++)
+        {
+            for (int j=0; j<7; j++){
+                VehicleImpl.Builder vehicleBuilder1 = VehicleImpl.Builder.newInstance(serviceproviders_E1[j]+"_"+"E1");
+                vehicleBuilder1.setStartLocation(Location.newInstance(depots[i]));
+                vehicleBuilder1.setType(E1).setReturnToDepot(false);
+                VehicleImpl vehicle1 = vehicleBuilder1.build();
+                allvehicles.add(vehicle1);
+            }
+        
+        }
+        
+        /*E2-Type Builder loop*/
+        
+        String[] serviceproviders_E2 = new String[6];
+        serviceproviders_E2[0]="T1087356";
+        serviceproviders_E2[1]="T1105438";
+        serviceproviders_E2[2]="T201601";
+        serviceproviders_E2[3]="T204767";
+        serviceproviders_E2[4]="T216130";
+        serviceproviders_E2[5]="T50283698";
+        
+        for (int i=0; i<19; i++)
+        {
+            for (int j=0; j<6; j++){
+                VehicleImpl.Builder vehicleBuilder1 = VehicleImpl.Builder.newInstance(serviceproviders_E2[j]+"_"+"E2");
+                vehicleBuilder1.setStartLocation(Location.newInstance(depots[i]));
+                vehicleBuilder1.setType(E2).setReturnToDepot(false);
+                VehicleImpl vehicle1 = vehicleBuilder1.build();
+                allvehicles.add(vehicle1);
+            }
+        
+        }
+        
+        /*E3-Type Builder loop*/
+        
+        String[] serviceproviders_E3 = new String[1];
+        serviceproviders_E3[0]="T18833";
+        
+        
+        for (int i=0; i<19; i++)
+        {
+            for (int j=0; j<1; j++){
+                VehicleImpl.Builder vehicleBuilder1 = VehicleImpl.Builder.newInstance(serviceproviders_E3[j]+"_"+"E3");
+                vehicleBuilder1.setStartLocation(Location.newInstance(depots[i]));
+                vehicleBuilder1.setType(E3).setReturnToDepot(false);
+                VehicleImpl vehicle1 = vehicleBuilder1.build();
+                allvehicles.add(vehicle1);
+            }
+        
+        }
+        
+        /*E4-Type Builder loop*/
+        
+        String[] serviceproviders_E4 = new String[1];
+        serviceproviders_E4[0]="T204767";
+                
+        for (int i=0; i<19; i++)
+        {
+            for (int j=0; j<1; j++){
+                VehicleImpl.Builder vehicleBuilder1 = VehicleImpl.Builder.newInstance(serviceproviders_E4[j]+"_"+"E4");
+                vehicleBuilder1.setStartLocation(Location.newInstance(depots[i]));
+                vehicleBuilder1.setType(E4).setReturnToDepot(false);
+                VehicleImpl vehicle1 = vehicleBuilder1.build();
+                allvehicles.add(vehicle1);
+            }
+        
+        }
 
-        VehicleImpl.Builder vehicleBuilder2 = VehicleImpl.Builder.newInstance("vehicle2");
-        vehicleBuilder2.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder2.setType(vehicleType2).setReturnToDepot(false);
-        VehicleImpl vehicle2 = vehicleBuilder2.build();
-
-        VehicleImpl.Builder vehicleBuilder3 = VehicleImpl.Builder.newInstance("vehicle3");
-        vehicleBuilder3.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder3.setType(vehicleType3).setReturnToDepot(false);
-        VehicleImpl vehicle3 = vehicleBuilder3.build();
-
-        VehicleImpl.Builder vehicleBuilder4 = VehicleImpl.Builder.newInstance("vehicle4");
-        vehicleBuilder4.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder4.setType(vehicleType4).setReturnToDepot(false);
-        VehicleImpl vehicle4 = vehicleBuilder4.build();
-
-        VehicleImpl.Builder vehicleBuilder5 = VehicleImpl.Builder.newInstance("vehicle5");
-        vehicleBuilder5.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder5.setType(vehicleType5).setReturnToDepot(false);
-        VehicleImpl vehicle5 = vehicleBuilder5.build();
-
-        VehicleImpl.Builder vehicleBuilder6 = VehicleImpl.Builder.newInstance("vehicle6");
-        vehicleBuilder6.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder6.setType(vehicleType6).setReturnToDepot(false);
-        VehicleImpl vehicle6 = vehicleBuilder6.build();
-
-        VehicleImpl.Builder vehicleBuilder7 = VehicleImpl.Builder.newInstance("vehicle7");
-        vehicleBuilder7.setStartLocation(Location.newInstance("0"));
-        vehicleBuilder7.setType(vehicleType7).setReturnToDepot(false);
-        VehicleImpl vehicle7 = vehicleBuilder7.build();
-
+       
         /*
         *** Reading the demands and the category types
         */
