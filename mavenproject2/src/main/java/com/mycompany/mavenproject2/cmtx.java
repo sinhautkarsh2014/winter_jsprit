@@ -95,7 +95,7 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=15)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -123,7 +123,7 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
                           
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=15)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -150,7 +150,7 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=15)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -178,7 +178,7 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=15)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -206,7 +206,7 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=15)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -234,7 +234,7 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=15)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
@@ -262,7 +262,7 @@ public class cmtx extends AbstractForwardVehicleRoutingTransportCosts implements
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("GT")&&!myEntries.get(i)[14].equals("GT"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("Upcountry")&&!myEntries.get(i)[14].equals("Upcountry"))){costs=99999; break;}
                           else if((!f.equals("0"))&&(!f.equals(t))&&(myEntries.get(i)[13].equals("ACD")&&!myEntries.get(i)[14].equals("ACD"))){costs=99999; break;}
-                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=(1+0.5)*distleg2)
+                          else if((!f.equals("0"))&&(!f.equals(t))&&dist+distleg1<=15)
                                     {int j=1;
                                     double costs_to=0;
                                      while(true){if("0".equals(myEntries.get(j)[0])&&t.equals(myEntries.get(j)[1]))
